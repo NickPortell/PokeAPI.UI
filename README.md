@@ -1,3 +1,10 @@
+# Build/Running the application solo
+docker build -t pokeapi-ui:dev .
+docker run -p 3000:3000 pokeapi-ui:dev
+
+dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\aspnetapp.pfx -p $CREDENTIAL_PLACEHOLDER$
+dotnet dev-certs https --trust
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
