@@ -1,0 +1,28 @@
+services:
+  frontend:
+    image: ${DOCKER_REGISTRY-}pokeapi-ui
+    build:
+      context: .
+      dockerfile: /Dockerfile
+    ports:
+    - "3000:3000"
+    volumes:
+    - .:/app
+    - /app/node_modules
+  
+  backend:
+    image: ${DOCKER_REGISTRY-}battleapi
+    build:
+      context: ..
+      dockerfile: /PokeApi/BattleAPI/Dockerfile
+    ports:
+    - "5000:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:5000;http://+:5001;
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=testPass
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    volumes:
+      - ~/.aspnet/https:/https:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ..:/app/PokeApi/BattleAPI 
