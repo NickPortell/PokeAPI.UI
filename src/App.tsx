@@ -1,10 +1,17 @@
-import { useState } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import './App.css'
 
-function App() {
-    const baseUrl = 'https://localhost:5000'
-    const [poke, setPoke] = useState('');
-    const [pos, setPos] = useState('');
+interface PokeDex {
+    entries: [key: string, value: string][]
+}
+
+const App: React.FC<PokeDex> = ({ entries }) => {
+    const baseUrl = 'https://' + window.location.hostname + ':5000/api'
+    const [poke, setPoke] = useState('bulbasaur/1');
+    const [pos, setPos] = useState('Front');
+    useEffect(() => {
+        getSprite();
+    }, [poke, pos]);
 
     async function makeCall(apiUrl: string): Promise<string> {
         const headers: Headers = new Headers()
@@ -13,8 +20,7 @@ function App() {
         headers.set('Access-Control-Allow-Origin', '*')
 
         const request: RequestInfo = new Request(apiUrl, {
-            method: 'GET',
-            headers: headers
+            method: 'GET', headers: headers
         })
 
         return await fetch(request)
@@ -37,38 +43,30 @@ function App() {
             img.src = url
         }
         else {
-            img.src = await makeCall(baseUrl + '/api/Pokemon/Sprites/' + poke + '/' + pos);
+            img.src = await makeCall(baseUrl + '/Pokemon/Sprites/' + poke + '/' + pos);
             localStorage.setItem(cacheName, img.src);
         }
         return true;
     }
 
-    async function showFront() {
-        setPos('Front');
-        await getSprite();
-    }
-
-    async function showBack() {
-        setPos('Back');
-        await getSprite();
-    }
-
     return (
-        <>
-            <div><img id='pokemon' style={{ width: 500, height: 500 }} /></div>
+        <Fragment key='pokemon-container'>
+            <div>
+                <img id='pokemon' style={{ width: 500, height: 500 }} />
+            </div>
             <div>
                 <select id='pokeSelection' value={poke} onChange={(e) => setPoke(e.target.value)}>
-                    <option value='ditto/132'>Ditto</option>
-                    <option value='mewtwo/150'>MewTwo</option>
-                    <option value='mew/151'>Mew</option>
-                    <option value='bulbasaur/1'>Bulbasaur</option>
+                    {entries.map(([key, value]) => (
+                        <option key={key} value={value + '/' + key}>{value}</option>
+                    )
+                    )}
                 </select>
             </div>
             <div>
-                <button onClick={async () => await showFront()}>Front</button>
-                <button onClick={async () => await showBack()}>Back</button>
+                <button onClick={async () => setPos('Front')}>Front</button>
+                <button onClick={async () => setPos('Back')}>Back</button>
             </div>
-        </>
+        </Fragment>
     )
 }
 
