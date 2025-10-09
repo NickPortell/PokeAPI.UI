@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import './index.css'
 import App from './App.tsx'
 
-const baseUrl = 'https://' + window.location.hostname + ':5000/api';
+const baseUrl = 'http://' + window.location.hostname + ':5000/api';
 
 async function loadPokeDex(): Promise<[key: string, value: string][]> {
     const headers: Headers = new Headers()

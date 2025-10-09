@@ -6,7 +6,7 @@ interface PokeDex {
 }
 
 const App: React.FC<PokeDex> = ({ entries }) => {
-    const baseUrl = 'https://' + window.location.hostname + ':5000/api'
+    const baseUrl = 'http://' + window.location.hostname + ':5000/api'
     const [poke, setPoke] = useState('bulbasaur/1');
     const [pos, setPos] = useState('Front');
     useEffect(() => {
