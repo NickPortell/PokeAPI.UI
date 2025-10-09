@@ -6,5 +6,7 @@ export default defineConfig({
     plugins: [plugin()],
     server: {
         port: 3000,
+        allowedHosts: ["localhost", "frontend"],
+        https: false
     }
 })
