@@ -23,3 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 /.vs/PokeAPI.UI/FileContentIndex
+/.vs/PokeAPI.UI/config
+/obj/Debug
+/.vs/PokeAPI.UI/v17/DocumentLayout.json
+/.vs/PokeAPI.UI/v17/DocumentLayout.backup.json
