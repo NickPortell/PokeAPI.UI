@@ -3,20 +3,10 @@ import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from "react-router";
 import './index.css'
 import App from './App.tsx'
-
-const baseUrl = 'http://' + window.location.hostname + ':5000/api';
+import { BaseClient } from "./shared/baseApiClient/baseClient.ts"
 
 async function loadPokeDex(): Promise<[key: string, value: string][]> {
-    const headers: Headers = new Headers()
-    headers.set('Content-Type', 'image/png')
-    headers.set('Accept', 'image/png')
-    headers.set('Access-Control-Allow-Origin', '*')
-
-    const request: RequestInfo = new Request(baseUrl + '/Pokemon/Dex', {
-        method: 'GET', headers: headers
-    })
-
-    return await fetch(request)
+    return await BaseClient('GET', '/Pokemon/Dex')
         .then(res => res.json())
         .then(json => Object.entries<string>(json))
 }
