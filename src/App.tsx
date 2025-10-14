@@ -1,12 +1,12 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import './App.css'
+import { BaseClient } from "./shared/baseApiClient/baseClient"
 
 interface PokeDex {
     entries: [key: string, value: string][]
 }
 
 const App: React.FC<PokeDex> = ({ entries }) => {
-    const baseUrl = 'http://' + window.location.hostname + ':5000/api'
     const [poke, setPoke] = useState('bulbasaur/1');
     const [pos, setPos] = useState('Front');
     useEffect(() => {
@@ -14,16 +14,13 @@ const App: React.FC<PokeDex> = ({ entries }) => {
     }, [poke, pos]);
 
     async function makeCall(apiUrl: string): Promise<string> {
-        const headers: Headers = new Headers()
-        headers.set('Content-Type', 'image/png')
-        headers.set('Accept', 'image/png')
-        headers.set('Access-Control-Allow-Origin', '*')
+        const headers: [string, string][] =
+            [
+                ['Content-Type', 'image/png'],
+                ['Accept', 'image/png']
+            ];
 
-        const request: RequestInfo = new Request(apiUrl, {
-            method: 'GET', headers: headers
-        })
-
-        return await fetch(request)
+        return await BaseClient('GET', apiUrl, null, headers)
             .then(res => res.blob())
             .then(blob => new Promise(callback => {
                 const reader = new FileReader();
@@ -43,7 +40,7 @@ const App: React.FC<PokeDex> = ({ entries }) => {
             img.src = url
         }
         else {
-            img.src = await makeCall(baseUrl + '/Pokemon/Sprites/' + poke + '/' + pos);
+            img.src = await makeCall('/Pokemon/Sprites/' + poke + '/' + pos);
             localStorage.setItem(cacheName, img.src);
         }
         return true;
