@@ -10,7 +10,10 @@ const divStyles: React.CSSProperties = {
     left: "1em",
     right: "1em",
     bottom: "auto",
-    backgroundColor: "crimson"
+    inset: "auto 1em auto 1em",
+    backgroundColor: "lightgrey",
+    width: "15em",
+    height: "fit-content"
 };
 
 const styles: React.CSSProperties = {
@@ -22,12 +25,12 @@ const childStyles: React.CSSProperties = {
     display: "inline-flex",
 };
 
-const TopNav: React.FC<NavigationProps> = (props) => {
+const SideNav: React.FC<NavigationProps> = (props) => {
     const navigate = useNavigate();
 
     return (
         <div style={divStyles}>
-            <div id="top-nav-container">
+            <div id="side-nav-container">
                 <ul style={styles}>
                     {props.routes.map((route) => (
                         <li key={route.key}>
@@ -36,11 +39,11 @@ const TopNav: React.FC<NavigationProps> = (props) => {
                     ))}
                 </ul>
             </div>
-            <div id="top-nav-child-container" style={childStyles}>
+            <div id="side-nav-child-container" style={childStyles}>
                 {props.children}
             </div>
         </div>
     )
 }
 
-export default TopNav
+export default SideNav

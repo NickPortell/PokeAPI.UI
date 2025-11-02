@@ -1,6 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { BaseClient } from "../shared/baseApiClient/baseClient"
-import TopNav from '../components/navigation/top-nav'
 
 interface PokeDex {
     entries: [key: string, value: string][]
@@ -48,7 +47,6 @@ const PokeView: React.FC<PokeDex> = ({ entries }) => {
 
     return (
         <div>
-            <TopNav/>
             <Fragment key='pokemon-container'>
                 <div>
                     <img id='pokemon' style={{ width: 500, height: 500 }} />
