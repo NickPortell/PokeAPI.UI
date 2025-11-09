@@ -1,5 +1,5 @@
 # Build/Running the application solo
-docker build -t pokeapi-ui:dev .
+docker compose up --build -d ; docker image prune -a -f
 docker run -p 3000:3000 pokeapi-ui:dev
 
 dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\aspnetapp.pfx -p $CREDENTIAL_PLACEHOLDER$
