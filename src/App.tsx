@@ -1,6 +1,6 @@
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router'
-import PokeView from './routes/pokeview.tsx';
+import PokeView from './routes/pokeview/pokeview.tsx';
 import { BaseClient } from "./shared/baseApiClient/baseClient.ts";
 import Landing from './routes/home.tsx';
 import { type NavItem } from './components/navigation/navigation.ts'
