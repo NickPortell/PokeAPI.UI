@@ -1,5 +1,6 @@
+import './pokeview.css'
 import React, { useState, useEffect, Fragment } from 'react'
-import { BaseClient } from "../shared/baseApiClient/baseClient"
+import { BaseClient } from "../../shared/baseApiClient/baseClient"
 
 interface PokeDex {
     entries: [key: string, value: string][]
@@ -49,7 +50,7 @@ const PokeView: React.FC<PokeDex> = ({ entries }) => {
         <div>
             <Fragment key='pokemon-container'>
                 <div>
-                    <img id='pokemon' style={{ width: 500, height: 500 }} />
+                    <img id='pokemon'/>
                 </div>
                 <div>
                     <select id='pokeSelection' value={poke} onChange={(e) => setPoke(e.target.value)}>
